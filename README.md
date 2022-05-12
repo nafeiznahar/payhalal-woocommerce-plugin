@@ -1,8 +1,18 @@
 # Wordpress WooCommerce Plugin for Payhalal
 
+## Installation Instructions
 
-- How to Install? Copy the folder into your wordpress plugin folder `/wp-content/plugins`.
+*NOTE: You will need to have Woocommerce installed for this to work.*
 
-Once you have copied the folder into the wordpress plugin folder, the plugin should be appear in the wordpress admin backend.
+You can either Download the zip file from [here](https://github.com/SouqaFintech/woocommerce-plugin) or run the following command in `/wp-content/plugins`:
 
-- If you have any troubles with installation or have any questions, please contact salam@payhalal.my
+```bash
+git clone https://github.com/SouqaFintech/woocommerce-plugin.git
+```
+
+After you have activated the plugin and created your Payhalal account, head to the Payhalal Merchant Dashboard and click on Developer tools. Add the following URLs:
+
+- Callback URL: https://your-website/?wc-api=payhalalcallback
+- Notification URL: https://your-website/?wc-api=payhalalcallback
+
+If you have any troubles with installation or have any questions, please contact salam@payhalal.my
