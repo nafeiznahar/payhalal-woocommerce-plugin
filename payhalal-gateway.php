@@ -144,18 +144,15 @@ function payhalal_init_gateway_class()
 
                 if ($order != "") {
                     $order->update_status('on-hold', __('Awaiting Payhalal Payment'));
-                    $myuser_id = (int)$order->user_id;
-                    $user_info = get_userdata($myuser_id);
-
                     unset($data_out);
 
                     $data_out["app_id"] = $this->publishable_key;
                     $data_out["amount"] = WC()->cart->total;
                     $data_out["currency"] = $this->currency;
                     $data_out["product_description"] = $this->product_description;
-                    $data_out["order_id"] = $order_id;
-                    $data_out["customer_name"] = $user_info->user_nicename;
-                    $data_out["customer_email"] = $user_info->user_email;
+                    $data_out["order_id"] = $order->get_order_number();
+                    $data_out["customer_name"] = $order->get_billing_first_name()." ".$order->get_billing_last_name();
+                    $data_out["customer_email"] = $order->get_billing_email();
                     $data_out["customer_phone"] = $order->get_billing_phone();
                     $data_out["hash"] = hash('sha256', $this->private_key . $data_out["amount"] . $data_out["currency"] . $data_out["product_description"] . $data_out["order_id"] . $data_out["customer_name"] . $data_out["customer_email"] . $data_out["customer_phone"]);
 
@@ -207,17 +204,15 @@ function payhalal_init_gateway_class()
             if (count($post_array) > 0) {
 
                 $order = wc_get_order($post_array['order_id']);
-                $myuser_id = (int)$order->user_id;
-                $user_info = get_userdata($myuser_id);
 
                 unset($data_out);
                 $data_out["app_id"] = $this->publishable_key;
-                $data_out["amount"] = number_format($order->total, 2);
+                $data_out["amount"] = $order->total;
                 $data_out["currency"] = $this->currency;
                 $data_out["product_description"] = $this->product_description;
                 $data_out["order_id"] = $post_array["order_id"];
-                $data_out["customer_name"] = $user_info->user_nicename;
-                $data_out["customer_email"] = $user_info->user_email;
+                $data_out["customer_name"] = $order->get_billing_first_name()." ".$order->get_billing_last_name();
+                $data_out["customer_email"] = $order->get_billing_email();
                 $data_out["customer_phone"] = $order->get_billing_phone();
                 $data_out["status"] = $post_array["status"];
 
@@ -231,9 +226,11 @@ function payhalal_init_gateway_class()
                         // Reduce stock levels
                         // The text for the note
                         $note = __('Payment Success. This is order transaction number : ' . $post_array["transaction_id"]);
+                        $note2 = __('Payment method : ' . $post_array["channel"]);
 
                         // Add the note
                         $order->add_order_note($note);
+                        $order->add_order_note($note2);
                         $order->reduce_order_stock();
                         $order->payment_complete();
 
@@ -256,9 +253,10 @@ function payhalal_init_gateway_class()
                         $order->update_status('failed', 'Payment Timeout.');
                         wp_redirect(WC()->cart->get_cart_url());
 
+                    } else {
+                        wp_redirect(WC()->cart->get_cart_url());
                     }
                 } else {
-
                     echo " HASH NOT OK";
 
                     wc_add_notice('Payment Error. Please Try Again', 'error');
@@ -266,14 +264,12 @@ function payhalal_init_gateway_class()
                     wp_redirect(WC()->cart->get_cart_url());
                 }
             } else {
-
                 wc_add_notice('Connection Error. Please Try Again', 'error');
                 wp_redirect(WC()->cart->get_cart_url());
             }
 
             die();
         }
-
 
         public function ph_sha256($data, $secret)
         {
