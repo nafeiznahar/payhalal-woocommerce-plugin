@@ -1,5 +1,9 @@
 # Wordpress WooCommerce Plugin for Payhalal
 
+## Note
+
+SouqaFintech SDN BHD **IS NOT RESPONSIBLE** for any problems that may arise from the use of this extension. Use this at your own risk. For any assistance, please email <mark>salam@payhalal.my</mark>.
+
 ## Installation Instructions
 
 *NOTE: You will need to have Woocommerce installed for this to work.*
