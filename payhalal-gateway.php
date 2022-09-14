@@ -94,7 +94,7 @@ function payhalal_init_gateway_class()
                     'title' => 'Description',
                     'type' => 'textarea',
                     'description' => 'Description during Checkout.',
-                    'default' => '<img src="https://payhalal.my/images/btn-woocommerce.png" />',
+                    'default' => '<img src="https://payhalal.my/images/pay-with-payhalal-wc.png" />',
                 ),
                 'testmode' => array(
                     'title' => 'Test mode',
