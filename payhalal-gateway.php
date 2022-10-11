@@ -206,7 +206,20 @@ function payhalal_init_gateway_class()
                 $order = wc_get_order($post_array['order_id']);
 
                 unset($data_out);
-                $data_out["app_id"] = $this->publishable_key;
+		$mode = $this->testmode;
+
+                if($mode == 1)
+                {
+                    $key = $this->test_private_key;
+		    $app = $this->test_publishable_key;	
+                }
+                else
+                {
+                    $key = $this->private_key;
+		    $app = $this->publishable_key;
+                }    
+		    
+                $data_out["app_id"] = $app;
                 $data_out["amount"] = $order->total;
                 $data_out["currency"] = $this->currency;
                 $data_out["product_description"] = $this->product_description;
@@ -215,8 +228,8 @@ function payhalal_init_gateway_class()
                 $data_out["customer_email"] = $order->get_billing_email();
                 $data_out["customer_phone"] = $order->get_billing_phone();
                 $data_out["status"] = $post_array["status"];
-
-                $dataout_hash = self::ph_sha256($data_out, $this->private_key);
+		
+                $dataout_hash = self::ph_sha256($data_out, $key);
 
                 if ($dataout_hash == $post_array['hash'] && $post_array['amount'] == $order->total) {
 
