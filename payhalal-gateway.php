@@ -210,13 +210,13 @@ function payhalal_init_gateway_class()
 
                 if($mode == 1)
                 {
-                    $key = $this->test_private_key;
-		    $app = $this->test_publishable_key;	
+                    $key = $this->get_option('test_private_key');
+		    $app = $this->get_option('test_publishable_key');	
                 }
                 else
                 {
-                    $key = $this->private_key;
-		    $app = $this->publishable_key;
+                    $key = $this->get_option('private_key');
+		    $app = $this->get_option('publishable_key');
                 }    
 		    
                 $data_out["app_id"] = $app;
