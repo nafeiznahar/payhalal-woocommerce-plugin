@@ -270,8 +270,6 @@ function payhalal_init_gateway_class()
                         wp_redirect(WC()->cart->get_cart_url());
                     }
                 } else {
-                    echo " HASH NOT OK";
-
                     wc_add_notice('Payment Error. Please Try Again', 'error');
                     $order->update_status('failed', 'Payment Error.');
                     wp_redirect(WC()->cart->get_cart_url());
