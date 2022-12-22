@@ -2,7 +2,7 @@
 
 ## Note
 
-SouqaFintech SDN BHD **IS NOT RESPONSIBLE** for any problems that may arise from the use of this extension. Use this at your own risk. For any assistance, please email <mark>support@payhalal.freshdesk.com</mark>.
+SouqaFintech SDN BHD **IS NOT RESPONSIBLE** for any problems that may arise from the use of this extension. Use this at your own risk. For any assistance, please email <mark>tech_support@payhalal.my</mark>.
 
 ## Installation Instructions
 
