@@ -20,4 +20,4 @@ After you have activated the plugin and created your Payhalal account, head to t
 - Success URL: https://your-website/shop/?wc-api=payhalalcallback
 - Cancel URL: https://your-website/shop/?wc-api=payhalalcallback
 
-If you have any troubles with installation or have any questions, please contact salam@payhalal.my
+If you have any troubles with installation or have any questions, please contact <mark>tech_support@payhalal.my</mark>.
