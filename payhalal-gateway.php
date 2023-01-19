@@ -143,7 +143,6 @@ function payhalal_init_gateway_class()
                 $order = wc_get_order($order_id);
 
                 if ($order != "") {
-                    $order->update_status('on-hold', __('Awaiting Payhalal Payment'));
                     unset($data_out);
 
                     $data_out["app_id"] = $this->publishable_key;
@@ -236,7 +235,6 @@ function payhalal_init_gateway_class()
                     if ($post_array["status"] == "SUCCESS") {
                         // Remove cart
                         WC()->cart->empty_cart();
-                        // Reduce stock levels
                         // The text for the note
                         $note = __('Payment Success. This is order transaction number : ' . $post_array["transaction_id"]);
                         $note2 = __('Payment method : ' . $post_array["channel"]);
@@ -244,7 +242,6 @@ function payhalal_init_gateway_class()
                         // Add the note
                         $order->add_order_note($note);
                         $order->add_order_note($note2);
-                        $order->reduce_order_stock();
                         $order->payment_complete();
 
                         wp_redirect($this->get_return_url($order));
