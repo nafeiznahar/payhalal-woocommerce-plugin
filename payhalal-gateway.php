@@ -5,28 +5,26 @@
  * Description: Payment Without Was-Was
  * Author:  Souqa Fintech Sdn Bhd
  * Author URI: https://payhalal.my
- * Version: 1.0.1
+ * Version: 1.0.2
  *
 
  /*
  * The class itself, please note that it is inside plugins_loaded action hook
  */
 
-add_filter('woocommerce_payment_gateways', 'payhalal_add_gateway_class');
-function payhalal_add_gateway_class($gateways)
-{
-    $gateways[] = 'payhalal_Gateway'; // your class name is here
-    return $gateways;
-}
-
 add_action('plugins_loaded', 'payhalal_init_gateway_class');
+
 function payhalal_init_gateway_class()
-{
+{ 
+    add_filter('woocommerce_payment_gateways', 'payhalal_add_gateway');
+	
+    function payhalal_add_gateway( $methods ) {
+        $methods[] = 'WC_Payhalal_Gateway';
+        return $methods;
+    }		
 
-    class payhalal_Gateway extends WC_Payment_Gateway
+    class WC_Payhalal_Gateway extends WC_Payment_Gateway
     {
-
-
         /**
          * Class constructor, more about it in Step 3
          */
@@ -63,10 +61,8 @@ function payhalal_init_gateway_class()
             // This action hook saves the settings
             add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
             add_action('woocommerce_api_payhalalrequest', array($this, 'request_handler'));
-            add_action('woocommerce_api_payhalalcallback', array($this, 'callback_handler'));
+            add_action('woocommerce_api_wc_payhalal_gateway', array($this, 'callback_handler'));
             add_action('woocommerce_api_payhalalstatus', array($this, 'check_status'));
-
-
         }
 
         /**
@@ -74,7 +70,6 @@ function payhalal_init_gateway_class()
          */
         public function init_form_fields()
         {
-
             $this->form_fields = array(
                 'enabled' => array(
                     'title' => 'Enable/Disable',
@@ -136,7 +131,6 @@ function payhalal_init_gateway_class()
 
         public function request_handler()
         {
-
             $order_id = $_GET['order_id'];
             if ($order_id > 0) {
 
@@ -180,7 +174,6 @@ function payhalal_init_gateway_class()
             die();
         }
 
-
         public function check_status()
         {
             $order_id = $_GET["order_id"];
@@ -194,10 +187,8 @@ function payhalal_init_gateway_class()
             die();
         }
 
-
         public function callback_handler()
         {
-
             $post_array = $_POST;
 
             if (count($post_array) > 0) {
@@ -281,8 +272,6 @@ function payhalal_init_gateway_class()
 
         public function ph_sha256($data, $secret)
         {
-
-
             $hash = hash('sha256', $secret . $data["amount"] . $data["currency"] . $data["product_description"] . $data["order_id"] . $data["customer_name"] . $data["customer_email"] . $data["customer_phone"] . $data["status"]);
             return $hash;
         }
