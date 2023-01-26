@@ -105,7 +105,7 @@ function payhalal_init_gateway_class()
                 ),
                 'test_private_key' => array(
                     'title' => 'Test Secret Key',
-                    'type' => 'password',
+                    'type' => 'text',
                 ),
                 'publishable_key' => array(
                     'title' => 'Live App ID',
@@ -113,7 +113,7 @@ function payhalal_init_gateway_class()
                 ),
                 'private_key' => array(
                     'title' => 'Live Secret Key',
-                    'type' => 'password'
+                    'type' => 'text'
                 )
             );
         }
