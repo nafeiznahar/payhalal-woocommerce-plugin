@@ -16,10 +16,14 @@ git clone https://github.com/SouqaFintech/payhalal-woocommerce-plugin
 
 After you have activated the plugin and created your Payhalal account, head to the Payhalal Merchant Dashboard and click on Developer tools. Add the following URLs:
 
+**Note:** Please do not set your callback url.
+
 - Return URL: https://your-website/?wc-api=WC_Payhalal_Gateway
 - Success URL: https://your-website/?wc-api=WC_Payhalal_Gateway
 - Cancel URL: https://your-website/?wc-api=WC_Payhalal_Gateway
 
 **Replace "your-website" with your shopping cart domain.**
+
+<img width="495" alt="image" src="https://user-images.githubusercontent.com/34120495/221494394-0379444e-fe5f-4a2e-b2c0-327d87966369.png">
 
 If you have any troubles with installation or have any questions, please contact <mark>tech_support@payhalal.my</mark>.
