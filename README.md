@@ -6,7 +6,7 @@ For detailed installation instructions, kindly refer to our [Wiki](https://githu
 
 *NOTE:* You will need to have Woocommerce installed for this to work.
 
-You can either Download the zip file from [here](https://github.com/SouqaFintech/woocommerce-plugin) or run the following command in `/wp-content/plugins`:
+You can either Download the zip file from [here](https://github.com/SouqaFintech/payhalal-woocommerce-plugin/archive/refs/heads/main.zip) or run the following command in `/wp-content/plugins`:
 
 ```bash
 git clone https://github.com/SouqaFintech/payhalal-woocommerce-plugin
