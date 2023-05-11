@@ -55,7 +55,6 @@ function payhalal_init_gateway_class()
             $this->private_key = $this->testmode ? $this->get_option('test_private_key') : $this->get_option('private_key');
             $this->publishable_key = $this->testmode ? $this->get_option('test_publishable_key') : $this->get_option('publishable_key');
             $this->action_url = $this->testmode ? 'https://api-testing.payhalal.my/pay' : 'https://api.payhalal.my/pay';
-            $this->currency = 'MYR';
             $this->product_description = 'WooCommerce';
 
             // This action hook saves the settings
@@ -141,7 +140,7 @@ function payhalal_init_gateway_class()
 
                     $data_out["app_id"] = $this->publishable_key;
                     $data_out["amount"] = WC()->cart->total;
-                    $data_out["currency"] = $this->currency;
+                    $data_out["currency"] = $order->get_currency();
                     $data_out["product_description"] = $this->product_description;
                     $data_out["order_id"] = $order->get_order_number();
                     $data_out["customer_name"] = $order->get_billing_first_name()." ".$order->get_billing_last_name();
@@ -211,7 +210,7 @@ function payhalal_init_gateway_class()
 		    
                 $data_out["app_id"] = $app;
                 $data_out["amount"] = $order->total;
-                $data_out["currency"] = $this->currency;
+                $data_out["currency"] = $order->get_currency();
                 $data_out["product_description"] = $this->product_description;
                 $data_out["order_id"] = $post_array["order_id"];
                 $data_out["customer_name"] = $order->get_billing_first_name()." ".$order->get_billing_last_name();
