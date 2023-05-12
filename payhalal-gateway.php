@@ -162,11 +162,11 @@ function payhalal_init_gateway_class()
                     echo '  document.getElementById("payhalal").submit();';
                     echo '</script>';
                 } else {
-                    wc_add_notice('Connection Error. Please Try Again', 'error');
+                    wc_add_notice('Invalid Order ID', 'error');
                     wp_redirect(WC()->cart->get_cart_url());
                 }
             } else {
-                wc_add_notice('Connection Error. Please Try Again', 'error');
+                wc_add_notice('Invalid Order ID!', 'error');
                 wp_redirect(WC()->cart->get_cart_url());
             }
 
@@ -180,7 +180,7 @@ function payhalal_init_gateway_class()
             if ($order->status == "processing" || $order->status == "completed") {
                 wp_redirect($this->get_return_url($order));
             } else {
-                wc_add_notice('Payment Failed. Please try again.', 'error');
+                wc_add_notice('Transaction was not processed or complete.', 'error');
                 wp_redirect(WC()->cart->get_cart_url());
             }
             die();
@@ -257,12 +257,12 @@ function payhalal_init_gateway_class()
                         wp_redirect(WC()->cart->get_cart_url());
                     }
                 } else {
-                    wc_add_notice('Payment Error. Please Try Again', 'error');
+                    wc_add_notice('Invalid hash.', 'error');
                     $order->update_status('failed', 'Payment Error.');
                     wp_redirect(WC()->cart->get_cart_url());
                 }
             } else {
-                wc_add_notice('Connection Error. Please Try Again', 'error');
+                wc_add_notice('No data was sent.', 'error');
                 wp_redirect(WC()->cart->get_cart_url());
             }
 
