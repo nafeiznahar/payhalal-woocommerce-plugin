@@ -177,7 +177,8 @@ function payhalal_init_gateway_class()
         {
             $order_id = $_GET["order_id"];
             $order = wc_get_order($order_id);
-            if ($order->status == "processing" || $order->status == "completed") {
+            $allowed_order_status = array("processing", "completed");
+            if (in_array($order->status, $allowed_order_status)) {
                 wp_redirect($this->get_return_url($order));
             } else {
                 wc_add_notice('Transaction was not processed or complete.', 'error');
@@ -220,7 +221,7 @@ function payhalal_init_gateway_class()
 		
                 $dataout_hash = self::ph_sha256($data_out, $key);
 
-                if ($dataout_hash == $post_array['hash'] && $post_array['amount'] == $order->total) {
+                if ($dataout_hash == $post_array['hash']) {
 
                     if ($post_array["status"] == "SUCCESS") {
                         // Remove cart
