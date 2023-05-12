@@ -221,7 +221,7 @@ function payhalal_init_gateway_class()
 		
                 $dataout_hash = self::ph_sha256($data_out, $key);
 
-                if ($dataout_hash == $post_array['hash']) {
+                if ($dataout_hash == $post_array['hash'] && $post_array['amount'] == $order->total) {
 
                     if ($post_array["status"] == "SUCCESS") {
                         // Remove cart
