@@ -65,7 +65,7 @@ function payhalal_init_gateway_class()
         }
 
         /**
-         * Plugin options, we deal with it in Step 3 too
+         * Plugin options
          */
         public function init_form_fields()
         {
@@ -118,7 +118,7 @@ function payhalal_init_gateway_class()
         }
 
         /*
-         * We're processing the payments here, everything about it is in Step 5
+         * We're processing the payments here
          */
         public function process_payment($order_id)
         {
@@ -149,18 +149,21 @@ function payhalal_init_gateway_class()
                     $data_out["hash"] = hash('sha256', $this->private_key . $data_out["amount"] . $data_out["currency"] . $data_out["product_description"] . $data_out["order_id"] . $data_out["customer_name"] . $data_out["customer_email"] . $data_out["customer_phone"]);
 
 
-                    echo '<form id="payhalal" method="post" action="' . $this->action_url . '" >';
-                    foreach ($data_out as $key => $value) {
-                        echo '<input type="hidden" name="' . $key . '" value="' . $value . '" >';
-                    }
-                    echo '<center>
-							<button type="submit">Please click here if you are not redirected within a few seconds</button>
-							</center>';
-                    echo '</form>';
+                    ?> 
+                    <form id="payhalal" method="post" action="<?= $this->action_url; ?>" >
+                    <?php foreach ($data_out as $key => $value) {
+                        ?> <input type="hidden" name="<?= $key; ?>" value="<?= $value; ?>" > <?php 
+                    } ?>
+                        <div style="display: grid; align-items: center; margin: auto;">
+					        <button type="submit" style="margin: auto; align-items: center; text-align: center;">Please click here if you are not redirected within a few seconds</button>
+                        </div>
+                    </form>
 
-                    echo '<script type="text/javascript">';
-                    echo '  document.getElementById("payhalal").submit();';
-                    echo '</script>';
+                    <script type="text/javascript">
+                        document.getElementById("payhalal").submit()
+                    </script>
+
+                    <?php 
                 } else {
                     wc_add_notice('Invalid Order ID', 'error');
                     wp_redirect(WC()->cart->get_cart_url());
@@ -184,7 +187,6 @@ function payhalal_init_gateway_class()
                 wc_add_notice('Transaction was not processed or complete.', 'error');
                 wp_redirect(WC()->cart->get_cart_url());
             }
-            die();
         }
 
         public function callback_handler()
@@ -196,17 +198,14 @@ function payhalal_init_gateway_class()
                 $order = wc_get_order($post_array['order_id']);
 
                 unset($data_out);
-		$mode = $this->testmode;
+		        $mode = $this->testmode;
 
-                if($mode == 1)
-                {
+                if($mode == 1) {
                     $key = $this->get_option('test_private_key');
-		    $app = $this->get_option('test_publishable_key');	
-                }
-                else
-                {
+		            $app = $this->get_option('test_publishable_key');	
+                } else {
                     $key = $this->get_option('private_key');
-		    $app = $this->get_option('publishable_key');
+    		        $app = $this->get_option('publishable_key');
                 }    
 		    
                 $data_out["app_id"] = $app;
@@ -266,8 +265,6 @@ function payhalal_init_gateway_class()
                 wc_add_notice('No data was sent.', 'error');
                 wp_redirect(WC()->cart->get_cart_url());
             }
-
-            die();
         }
 
         public function ph_sha256($data, $secret)
